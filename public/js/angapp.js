@@ -1,0 +1,1 @@
+angular.module('angularSPA', ['ngRoute', 'angappRoutes', 'AboutCtrl', 'AdminCtrl', 'ContactCtrl', 'FaqCtrl', 'GalleryCtrl', 'HeroCtrl', 'HomeCtrl', 'RegisterCtrl', 'SponsorsCtrl'])

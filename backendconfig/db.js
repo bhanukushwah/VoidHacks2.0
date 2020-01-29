@@ -1,3 +1,3 @@
-module.exports ={
-    url : 'mongodb://localhost/voidhacks'
+module.exports = {
+    url: 'mongodb://localhost/voidhacks'
 }

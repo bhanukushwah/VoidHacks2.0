@@ -1,0 +1,11 @@
+// Provide path of the application 
+angular.module('angappRoutes', []).config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+    $routeProvider
+
+        .when('/', {
+            templateUrl: 'views/home.html',
+            controller: 'HomeController'
+        })
+
+    $locationProvider.html5Mode(true);
+}]);
