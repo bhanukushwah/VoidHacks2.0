@@ -19,7 +19,7 @@ git clone https://github.com/bhanukushwah/VoidHacks2.0
 
 Install all the node packages inside cloned directory by
 ```
-cd bhraman
+cd VoidHacks2.0
 npm install
 ```
 
