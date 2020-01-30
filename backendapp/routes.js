@@ -71,7 +71,8 @@ module.exports = function (expobj) {
             } else {
                 console.log(result)
                 res.json({
-                    msg: 'Get Data Successfully'
+                    msg: 'Get Data Successfully',
+                    result : result
                 });
             }
 
