@@ -145,15 +145,16 @@ module.exports = function (expobj) {
 
     const About= require("./models/about");
 
-    expobj.post("/api/about", (req, res, next) => {
+    expobj.post("/api/about", (req, res) => {
         const about = new About({
             about_content: req.body.about_content,
             video_link: req.body.video_link
         })
-        .save(function (err, result) {
+        about.save(function (err, result) {
             if (err) {
                 res.json({
-                    msg: 'Failed to upload.'
+                    msg: 'Failed to upload.',
+                    err: err
                 });
             } else {
                 res.json({
