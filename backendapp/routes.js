@@ -179,6 +179,26 @@ module.exports = function (expobj) {
 
     // Gallery Component
 
+    // FAQ component
+
+    const FAQ= require("./models/faq");
+
+    expobj.get("/api/faq", (req, res, next) => {
+        FAQ.find(function (err, result) {
+            if (err) {
+                res.json({
+                    msg: 'Error In FAQ'
+                });
+            } else {
+                console.log(result)
+                res.json({
+                    msg: 'FAQ run Successfully',
+                    result : result
+                });
+            }
+
+        });
+    });
 
 
 };
