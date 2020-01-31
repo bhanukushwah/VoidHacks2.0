@@ -82,7 +82,7 @@ module.exports = function (expobj) {
     
     //Update Hero Content
     // expobj.use(upload.array());
-    // expobj.patch("/api/hero/:productId", (req, res, next) => {
+    // expobj.post("/api/hero/:productId", (req, res, next) => {
     //     const id = req.params.productId;
     //     const updateOps = {};
     //     for (const ops of req.body) {
@@ -110,7 +110,27 @@ module.exports = function (expobj) {
     //             });
     //         });
     // });
+    expobj.put('/api/hero/:id', upload.single('logo'), function(req, res, next){
+        Hero.update({_id: req.body._id}, {$set:{logo:req.file.path, date:req.body.date, venue:req.body.venue}},{multi:true}, function(err, update){
+            if(err){
+                res.json(err);
+            }
+            else{
+                res.json(update);
+            }
+        });
+    });
 
+    expobj.delete('/api/hero/:id', function(req, res, next){
+        Hero.deleteOne(req.params._Id).then(function (err, results){
+            if(err){
+                    res.json(err);
+                }
+                else{
+                    res.json(results);
+                };
+        })
+    });
     // Hero.delete("/:productId", (req, res, next) => {
     //     const id = req.params.productId;
     //     Product.remove({
