@@ -221,7 +221,8 @@ module.exports = function (expobj) {
     // FAQ component
 
     const FAQ= require("./models/faq");
-
+    
+    // get api for FAQ
     expobj.get("/api/faq", (req, res, next) => {
         FAQ.find(function (err, result) {
             if (err) {
@@ -238,6 +239,27 @@ module.exports = function (expobj) {
 
         });
     });
+    
+    // Post api for FAQ
+    expobj.post("/api/faq", (req, res) => {
+        const faq = new FAQ({
+            question: req.body.question,
+            answer: req.body.answer
+        })
+        FAQ.save(function (err, result) {
+            if (err) {
+                res.json({
+                    msg: 'Failed to upload.',
+                    err: err
+                });
+            } else {
+                res.json({
+                    msg: 'Uploaded Successfully.'
+                });
+            }
 
+        });
+    });
+    
 
 };
