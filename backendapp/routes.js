@@ -199,6 +199,45 @@ module.exports = function (expobj) {
 
     // Gallery Component
 
+    const Gallery= require("./models/gallery");
+
+    expobj.get("/api/gallery", (req, res, next) => {
+        Gallery.find(function (err, result) {
+            if (err) {
+                res.json({
+                    msg: 'Error In Gallery'
+                });
+            } else {
+                console.log(result)
+                res.json({
+                    msg: 'Gallery run Successfully',
+                    result : result
+                });
+            }
+
+        });
+    });
+
+    // FAQ component
+
+    const FAQ= require("./models/faq");
+
+    expobj.get("/api/faq", (req, res, next) => {
+        FAQ.find(function (err, result) {
+            if (err) {
+                res.json({
+                    msg: 'Error In FAQ'
+                });
+            } else {
+                console.log(result)
+                res.json({
+                    msg: 'FAQ run Successfully',
+                    result : result
+                });
+            }
+
+        });
+    });
 
 
 };

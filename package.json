@@ -4,7 +4,8 @@
   "description": "Dynamic Website for VoidHacks 2.0",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,6 @@
     "mongoose": "^5.8.10",
     "multer": "^1.4.2",
     "nodemon": "^2.0.2"
-  }
+  },
+  "devDependencies": {}
 }
