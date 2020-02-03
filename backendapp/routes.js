@@ -79,7 +79,7 @@ module.exports = function (expobj) {
 
     //Update Hero Component
     expobj.put('/api/hero/:id', upload.single('logo'), function (req, res, next) {
-        Hero.update({
+        Hero.updateOne({
             _id: req.body._id
         }, {
             $set: {
@@ -151,28 +151,26 @@ module.exports = function (expobj) {
         });
     });
 
-    // //Api to update data
-    // expobj.put("/api/about/:id", (req, res) => {
-    //     About.update({
-    //         _id: req.params._id
-    //     }, {
-    //         $set: {
-    //             about_content: req.body.about_content,
-    //             video_link: req.body.video_link
-    //         }
-    //     }, {
-    //         multi: true
-    //     }, function (err, update) {
-    //         if (err) {
-    //             res.json(err);
-    //         } else {
-    //             res.json({
-    //                 msg: 'data updated',
-    //                 update: update
-    //             });
-    //         }
-    //     });
-    // });
+    //Api to update data
+    expobj.put("/api/about/:id", (req, res, next) => {
+        About.updateOne({
+            _id: req.params._id
+        }, {
+            $set: {
+                about_content: req.body.about_content,
+                video_link: req.body.video_link
+            }
+        }, {
+            multi: true
+        }, function (err, update) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(update);
+            }
+        });
+    });
+
 
     // //Api to Delete Data
     // expobj.delete('/api/about/:id', function (req, res, next) {
