@@ -60,7 +60,6 @@ module.exports = function (expobj) {
         });
     });
 
-    
     //Get Hero Content
     expobj.get("/api/hero", (req, res, next) => {
         Hero.find(function (err, result) {
@@ -69,82 +68,53 @@ module.exports = function (expobj) {
                     msg: 'Error Not Get Data Successfully'
                 });
             } else {
-                console.log(result)
                 res.json({
                     msg: 'Get Data Successfully',
-                    result : result
+                    result: result
                 });
             }
-
         });
     });
-    
-    
-    //Update Hero Content
-    // expobj.use(upload.array());
-    // expobj.patch("/api/hero/:productId", (req, res, next) => {
-    //     const id = req.params.productId;
-    //     const updateOps = {};
-    //     for (const ops of req.body) {
-    //         updateOps[ops.propName] = ops.value;
-    //     }
-    //     Hero.update({
-    //             _id: id
-    //         }, {
-    //             $set: updateOps
-    //         })
-    //         .exec()
-    //         .then(result => {
-    //             res.status(200).json({
-    //                 message: 'Product updated',
-    //                 request: {
-    //                     type: 'GET',
-    //                     url: 'http://localhost:3000/products/' + id
-    //                 }
-    //             });
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             res.status(500).json({
-    //                 error: err
-    //             });
-    //         });
-    // });
 
-    // Hero.delete("/:productId", (req, res, next) => {
-    //     const id = req.params.productId;
-    //     Product.remove({
-    //             _id: id
-    //         })
-    //         .exec()
-    //         .then(result => {
-    //             res.status(200).json({
-    //                 message: 'Product deleted',
-    //                 request: {
-    //                     type: 'POST',
-    //                     url: 'http://localhost:3000/products',
-    //                     body: {
-    //                         name: 'String',
-    //                         price: 'Number'
-    //                     }
-    //                 }
-    //             });
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             res.status(500).json({
-    //                 error: err
-    //             });
-    //         });
-    // });
+    //Update Hero Component
+    expobj.put('/api/hero/:heroId', upload.single('logo'), function (req, res, next) {
+        Hero.updateOne({
+            heroId: req.body.heroId
+        }, {
+            $set: {
+                logo: req.file.path,
+                date: req.body.date,
+                venue: req.body.venue
+            }
+        }, {
+            multi: true
+        }, function (err, update) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(update);
+            }
+        });
+    });
 
-
+    //Delete Hero Component
+    expobj.delete('/api/hero/:heroId', function (req, res) {
+        // console.log(req.params.heroId);
+        Hero.deleteOne({"_id":req.params.heroId}).then(function (err, results) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(results);
+            }
+        });
+    });
 
 
     // About Component
 
-    const About= require("./models/about");
+    const About = require("./models/about");
 
+    // API to upload Data
     expobj.post("/api/about", (req, res) => {
         const about = new About({
             about_content: req.body.about_content,
@@ -165,8 +135,59 @@ module.exports = function (expobj) {
         });
     });
 
+    // Api to get data
+    expobj.get("/api/about", (req, res) => {
+        About.find(function (err, result) {
+            if (err) {
+                res.json({
+                    msg: 'Failed to get Data'
+                });
+            } else {
+                res.json({
+                    msg: 'Successfully Get Data',
+                    result: result
+                })
+            }
+        });
+    });
+
+    //Api to update data
+    expobj.put("/api/about/:aboutId", (req, res, next) => {
+        About.updateOne({
+            aboutId: req.params.aboutId
+        }, {
+            $set: {
+                about_content: req.body.about_content,
+                video_link: req.body.video_link
+            }
+        }, {
+            multi: true
+        }, function (err, update) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(update);
+            }
+        });
+    });
+
+    //Api to Delete Data
+    expobj.delete('/api/about/:aboutId', function (req, res) {
+        About.deleteOne({"_id":req.params.aboutId}, {
+            multi: true
+        }, function (err, results) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(results);
+            }
+            
+        }); 
+    });
+
     // Admin Component
 
+    
 
     // Contact Component
 
@@ -225,17 +246,20 @@ module.exports = function (expobj) {
 
     // Gallery Component
 
-    const Gallery= require("./models/gallery");
+    const Gallery = require("./models/gallery");
 
     
-    expobj.post("/api/gallery", upload.single('image'), (req, res, next) => {
+    // API to upload Data
+    expobj.post("/api/gallery",upload.single('image'), (req, res) => {
         const gallery = new Gallery({
             image: req.file.path
-        });
-        gallery.save(function (err, result) {
+        })
+        Gallery.save(function (err, result) {
             if (err) {
                 res.json({
-                    msg: 'Failed to upload.'
+                    msg: 'Failed to upload.',
+                    err: err
+
                 });
             } else {
                 res.json({
@@ -245,6 +269,7 @@ module.exports = function (expobj) {
 
         });
     });
+    // Api to get data
 
     expobj.get("/api/gallery", (req, res, next) => {
         Gallery.find(function (err, result) {
@@ -253,10 +278,9 @@ module.exports = function (expobj) {
                     msg: 'Error In Gallery'
                 });
             } else {
-                console.log(result)
                 res.json({
                     msg: 'Gallery run Successfully',
-                    result : result
+                    result: result
                 });
             }
 
@@ -272,31 +296,45 @@ module.exports = function (expobj) {
         });
     });
 
-    // FAQ component
-
-    const FAQ= require("./models/faq");
-
-
-    expobj.post("/api/faq", (req, res) => {
-        const about = new FAQ({
-            question: req.body.question,
-            answer: req.body.answer
-        })
-        about.save(function (err, result) {
-            if (err) {
-                res.json({
-                    msg: 'Failed to upload.',
-                    err: err
-                });
-            } else {
-                res.json({
-                    msg: 'Uploaded Successfully.'
-                });
+    //Api to update data
+    expobj.put("/api/gallery/:imageId", upload.single('image'), (req, res, next) => {
+        Gallery.updateOne({
+            imageId: req.fiel.path
+        }, {
+            $set: {
+                image: req.file.path
             }
-
+        }, {
+            multi: true
+        }, function (err, update) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(update);
+            }
         });
     });
 
+    //Api to Delete Data
+    expobj.delete('/api/gallery/:imageId', function (req, res) {
+        Gallery.deleteOne({"_id":req.params.imageId}, {
+            multi: true
+        }, function (err, results) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(results);
+            }
+        }); 
+    });
+
+    // FAQ component
+
+    const FAQ = require("./models/faq");
+
+
+
+    // get api for FAQ
     expobj.get("/api/faq", (req, res, next) => {
         FAQ.find(function (err, result) {
             if (err) {
@@ -307,7 +345,7 @@ module.exports = function (expobj) {
                 console.log(result)
                 res.json({
                     msg: 'FAQ run Successfully',
-                    result : result
+                    result: result
                 });
             }
 
@@ -334,5 +372,24 @@ module.exports = function (expobj) {
         });
     });
 
+    // Post api for FAQ
+    expobj.post("/api/faq", (req, res) => {
+        const faq = new FAQ({
+            question: req.body.question,
+            answer: req.body.answer
+        })
+        FAQ.save(function (err, result) {
+            if (err) {
+                res.json({
+                    msg: 'Failed to upload.',
+                    err: err
+                });
+            } else {
+                res.json({
+                    msg: 'Uploaded Successfully.'
+                });
+            }
 
+        });
+    });
 };

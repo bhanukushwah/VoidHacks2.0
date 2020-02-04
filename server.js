@@ -9,6 +9,10 @@ var mongoose = require("mongoose");
 var expobj = express();
 
 // Setup mongoose to interact with database
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
 mongoose.connect("mongodb://localhost:27017/voidhacks");
 mongoose.connection.on("Connected", function () {
     console.log("Connection established");
