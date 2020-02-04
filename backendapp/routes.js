@@ -176,10 +176,75 @@ module.exports = function (expobj) {
 
     // Sponsors Component
 
+    const Sponsors= require("./models/sponsors");
+
+    
+    expobj.post("/api/sponsors" , upload.single('image'), (req, res, next) => {
+        const sponsors = new Sponsors({
+            image: req.file.path
+        });
+        sponsors.save(function (err, result) {
+            if (err) {
+                res.json({
+                    msg: 'Failed to upload.'
+                });
+            } else {
+                res.json({
+                    msg: 'Uploaded Successfully.'
+                });
+            }
+
+        });
+    });
+
+    expobj.get("/api/sponsors", (req, res, next) => {
+        Sponsors.find(function (err, result) {
+            if (err) {
+                res.json({
+                    msg: 'Error In Sponsors'
+                });
+            } else {
+                console.log(result)
+                res.json({
+                    msg: 'Sponsors execute successfully',
+                    result : result
+                });
+            }
+
+        });
+    });
+    expobj.delete('/api/sponsors/:id', function(req, res){
+
+        Sponsors.remove({_id: req.params.id}, function(err, result){
+            if(err)
+                res.send(err);
+            else
+            res.json(result);
+        });
+    });
 
     // Gallery Component
 
     const Gallery= require("./models/gallery");
+
+    
+    expobj.post("/api/gallery", upload.single('image'), (req, res, next) => {
+        const gallery = new Gallery({
+            image: req.file.path
+        });
+        gallery.save(function (err, result) {
+            if (err) {
+                res.json({
+                    msg: 'Failed to upload.'
+                });
+            } else {
+                res.json({
+                    msg: 'Uploaded Successfully.'
+                });
+            }
+
+        });
+    });
 
     expobj.get("/api/gallery", (req, res, next) => {
         Gallery.find(function (err, result) {
@@ -195,6 +260,15 @@ module.exports = function (expobj) {
                 });
             }
 
+        });
+    });
+    expobj.delete('/api/gallery/:id', function(req, res){
+
+        Gallery.remove({_id: req.params.id}, function(err, result){
+            if(err)
+                res.send(err);
+            else
+            res.json(result);
         });
     });
 
@@ -238,6 +312,16 @@ module.exports = function (expobj) {
             }
 
         });
+    });
+    expobj.put('/api/faq/:id', function(req, res){
+
+        console.log("Updated data" +req.body._id + req.body.question);
+        About.update({_id: req.body._id},{$set:{question:req.body.question,answer:req.body.answer}},{multi:true}, function(err, update){
+                if(err)
+                res.json(err);
+                else
+                res.json(update);
+            });
     });
 
     expobj.delete('/api/faq/:id', function(req, res){
