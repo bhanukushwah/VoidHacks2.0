@@ -68,7 +68,6 @@ module.exports = function (expobj) {
                     msg: 'Error Not Get Data Successfully'
                 });
             } else {
-                console.log(result)
                 res.json({
                     msg: 'Get Data Successfully',
                     result: result
@@ -78,9 +77,9 @@ module.exports = function (expobj) {
     });
 
     //Update Hero Component
-    expobj.put('/api/hero/:id', upload.single('logo'), function (req, res, next) {
+    expobj.put('/api/hero/:heroId', upload.single('logo'), function (req, res, next) {
         Hero.updateOne({
-            _id: req.body._id
+            heroId: req.body.heroId
         }, {
             $set: {
                 logo: req.file.path,
@@ -99,14 +98,15 @@ module.exports = function (expobj) {
     });
 
     //Delete Hero Component
-    expobj.delete('/api/hero/:id', function (req, res, next) {
-        Hero.deleteOne(req.params._Id).then(function (err, results) {
+    expobj.delete('/api/hero/:heroId', function (req, res) {
+        // console.log(req.params.heroId);
+        Hero.deleteOne({"_id":req.params.heroId}).then(function (err, results) {
             if (err) {
                 res.json(err);
             } else {
                 res.json(results);
-            };
-        })
+            }
+        });
     });
 
 
@@ -152,9 +152,9 @@ module.exports = function (expobj) {
     });
 
     //Api to update data
-    expobj.put("/api/about/:id", (req, res, next) => {
+    expobj.put("/api/about/:aboutId", (req, res, next) => {
         About.updateOne({
-            _id: req.params._id
+            aboutId: req.params.aboutId
         }, {
             $set: {
                 about_content: req.body.about_content,
@@ -171,20 +171,23 @@ module.exports = function (expobj) {
         });
     });
 
-
-    // //Api to Delete Data
-    // expobj.delete('/api/about/:id', function (req, res, next) {
-    //     About.deleteOne(req.params._Id).then(function (err, results) {
-    //         if (err) {
-    //             res.json(err);
-    //         } else {
-    //             res.json(results);
-    //         };
-    //     })
-    // });
+    //Api to Delete Data
+    expobj.delete('/api/about/:aboutId', function (req, res) {
+        About.deleteOne({"_id":req.params.aboutId}, {
+            multi: true
+        }, function (err, results) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(results);
+            }
+            
+        }); 
+    });
 
     // Admin Component
 
+    
 
     // Contact Component
 
@@ -197,8 +200,31 @@ module.exports = function (expobj) {
 
     // Gallery Component
 
-    const Gallery= require("./models/gallery");
+    const Gallery = require("./models/gallery");
 
+    
+
+    // API to upload Data
+    expobj.post("/api/gallery",upload.single('image'), (req, res) => {
+        const gallery = new Gallery({
+            image: req.file.path
+        })
+        Gallery.save(function (err, result) {
+            if (err) {
+                res.json({
+                    msg: 'Failed to upload.',
+                    err: err
+                });
+            } else {
+                res.json({
+                    msg: 'Uploaded Successfully.'
+                });
+            }
+
+        });
+    });
+
+    // Api to get data
     expobj.get("/api/gallery", (req, res, next) => {
         Gallery.find(function (err, result) {
             if (err) {
@@ -206,20 +232,51 @@ module.exports = function (expobj) {
                     msg: 'Error In Gallery'
                 });
             } else {
-                console.log(result)
                 res.json({
                     msg: 'Gallery run Successfully',
-                    result : result
+                    result: result
                 });
             }
 
         });
     });
 
+    //Api to update data
+    expobj.put("/api/gallery/:imageId", upload.single('image'), (req, res, next) => {
+        Gallery.updateOne({
+            imageId: req.fiel.path
+        }, {
+            $set: {
+                image: req.file.path
+            }
+        }, {
+            multi: true
+        }, function (err, update) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(update);
+            }
+        });
+    });
+
+    //Api to Delete Data
+    expobj.delete('/api/gallery/:imageId', function (req, res) {
+        Gallery.deleteOne({"_id":req.params.imageId}, {
+            multi: true
+        }, function (err, results) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(results);
+            }
+        }); 
+    });
+
     // FAQ component
 
-    const FAQ= require("./models/faq");
-    
+    const FAQ = require("./models/faq");
+
     // get api for FAQ
     expobj.get("/api/faq", (req, res, next) => {
         FAQ.find(function (err, result) {
@@ -231,13 +288,13 @@ module.exports = function (expobj) {
                 console.log(result)
                 res.json({
                     msg: 'FAQ run Successfully',
-                    result : result
+                    result: result
                 });
             }
 
         });
     });
-    
+
     // Post api for FAQ
     expobj.post("/api/faq", (req, res) => {
         const faq = new FAQ({
@@ -258,6 +315,4 @@ module.exports = function (expobj) {
 
         });
     });
-    
-
 };

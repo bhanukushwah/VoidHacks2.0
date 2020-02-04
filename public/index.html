@@ -1,14 +1,38 @@
-<html lang="en" >
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VoidHacks | Central India's Biggest Hackathon</title>
     
+    <base href="/">
+
     <!-- include all stylesheets  -->
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./libs/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- include controllers and services -->
+    <script src="./libs/angular/angular.min.js"></script>
+    <script src="./libs/angular-route/angular-route.min.js"></script>
+    <script src="./js/angapp.js"></script>
+    <script src="./js/angappRoutes.js"></script>
+
+    <script src="./js/controllers/AboutCtrl.js"></script>
+    <script src="./js/controllers/AdminCtrl.js"></script>
+    <script src="./js/controllers/ContactCtrl.js"></script>
+    <script src="./js/controllers/FaqCtrl.js"></script>
+    <script src="./js/controllers/GalleryCtrl.js"></script>
+    <script src="./js/controllers/HeroCtrl.js"></script>
+    <script src="./js/controllers/HomeCtrl.js"></script>
+    <script src="./js/controllers/RegisterCtrl.js"></script>
+    <script src="./js/controllers/SponsorsCtrl.js"></script>
+    </head>
+<body ng-app="voidhacksApp" ng-controller="HomeController">
     
+    <div ng-view>
+    </div>
+
+    <!-- include all scripts -->
+    <!-- <script src="./libs/bootstrap/dist/js/bootstrap.min.js"></script> -->
 </body>
 </html>

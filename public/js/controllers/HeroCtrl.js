@@ -1,4 +1,3 @@
-angular.module('', []).controller('', function ($scope, $http, $routeParams) {
-
-
+angular.module('HeroCtrl', []).controller('HeroController', function ($scope, $http, $routeParams) {
+$scope.message="message";
 })

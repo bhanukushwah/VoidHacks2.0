@@ -1,1 +1,2 @@
-angular.module('angularSPA', ['ngRoute', 'angappRoutes', 'AboutCtrl', 'AdminCtrl', 'ContactCtrl', 'FaqCtrl', 'GalleryCtrl', 'HeroCtrl', 'HomeCtrl', 'RegisterCtrl', 'SponsorsCtrl'])
+angular.module('voidhacksApp', ['ngRoute', 'angappRoutes', 'HomeCtrl', 'HeroCtrl']);
+// , 'AboutCtrl', 'AdminCtrl', 'ContactCtrl', 'FaqCtrl', 'GalleryCtrl', 'HeroCtrl', 'RegisterCtrl', 'SponsorsCtrl'
