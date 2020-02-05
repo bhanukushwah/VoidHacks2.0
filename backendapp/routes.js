@@ -197,10 +197,10 @@ module.exports = function (expobj) {
 
     // Sponsors Component
 
-    const Sponsors= require("./models/sponsors");
+    const Sponsors = require("./models/sponsors");
 
-    
-    expobj.post("/api/sponsors" , upload.single('image'), (req, res, next) => {
+
+    expobj.post("/api/sponsors", upload.single('image'), (req, res, next) => {
         const sponsors = new Sponsors({
             image: req.file.path
         });
@@ -228,19 +228,19 @@ module.exports = function (expobj) {
                 console.log(result)
                 res.json({
                     msg: 'Sponsors execute successfully',
-                    result : result
+                    result: result
                 });
             }
 
         });
     });
-    expobj.delete('/api/sponsors/:id', function(req, res){
+    expobj.delete('/api/sponsors/:id', function (req, res) {
 
-        Sponsors.remove({_id: req.params.id}, function(err, result){
-            if(err)
+        Sponsors.remove({ _id: req.params.id }, function (err, result) {
+            if (err)
                 res.send(err);
             else
-            res.json(result);
+                res.json(result);
         });
     });
 
@@ -283,13 +283,13 @@ module.exports = function (expobj) {
 
         });
     });
-    expobj.delete('/api/gallery/:id', function(req, res){
+    expobj.delete('/api/gallery/:id', function (req, res) {
 
-        Gallery.remove({_id: req.params.id}, function(err, result){
-            if(err)
+        Gallery.remove({ _id: req.params.id }, function (err, result) {
+            if (err)
                 res.send(err);
             else
-            res.json(result);
+                res.json(result);
         });
     });
 
@@ -348,24 +348,24 @@ module.exports = function (expobj) {
 
         });
     });
-    expobj.put('/api/faq/:id', function(req, res){
+    expobj.put('/api/faq/:id', function (req, res) {
 
-        console.log("Updated data" +req.body._id + req.body.question);
-        About.update({_id: req.body._id},{$set:{question:req.body.question,answer:req.body.answer}},{multi:true}, function(err, update){
-                if(err)
+        console.log("Updated data" + req.body._id + req.body.question);
+        About.update({ _id: req.body._id }, { $set: { question: req.body.question, answer: req.body.answer } }, { multi: true }, function (err, update) {
+            if (err)
                 res.json(err);
-                else
+            else
                 res.json(update);
-            });
+        });
     });
 
-    expobj.delete('/api/faq/:id', function(req, res){
+    expobj.delete('/api/faq/:id', function (req, res) {
 
-        FAQ.remove({_id: req.params.id}, function(err, result){
-            if(err)
+        FAQ.remove({ _id: req.params.id }, function (err, result) {
+            if (err)
                 res.send(err);
             else
-            res.json(result);
+                res.json(result);
         });
     });
 

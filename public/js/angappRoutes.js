@@ -7,7 +7,7 @@ angular.module('angappRoutes', []).config(['$routeProvider', '$locationProvider'
             controller: 'HomeController'
         })
         .when('/hero', {
-            templateUrl:'views/hero.html',
+            templateUrl: 'views/hero.html',
             controller: 'HeroController'
         })
         .when('/vh-admin', {

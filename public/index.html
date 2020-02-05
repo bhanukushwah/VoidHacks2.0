@@ -1,10 +1,11 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VoidHacks | Central India's Biggest Hackathon</title>
-    
+
     <base href="/">
 
     <!-- include all stylesheets  -->
@@ -12,9 +13,10 @@
     <link rel="stylesheet" href="./css/block.css">
 
     <link rel="shortcut icon" href="./img/favicon.ico">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     <script src="https://kit.fontawesome.com/c2c84918eb.js" crossorigin="anonymous"></script>
-    
+
 
     <!-- include controllers and services -->
     <script src="./libs/angular/angular.min.js"></script>
@@ -31,22 +33,24 @@
     <script src="./js/controllers/HomeCtrl.js"></script>
     <script src="./js/controllers/RegisterCtrl.js"></script>
     <script src="./js/controllers/SponsorsCtrl.js"></script>
-    </head>
+</head>
+
 <body ng-app="voidhacksApp" ng-controller="HomeController">
-    
+
     <div ng-view>
     </div>
 
     <!-- include all scripts -->
     <script src="./js/custom/menu.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script>
-		$(document).on("click", '[data-toggle="lightbox"]', function (event) {
-			event.preventDefault();
-			$(this).ekkoLightbox();
-		});
-	</script>
-    
+        $(document).on("click", '[data-toggle="lightbox"]', function (event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
+    </script>
+
 </body>
+
 </html>
