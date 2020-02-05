@@ -260,6 +260,35 @@ module.exports = function (expobj) {
 
         });
     });
+     //Delete api for FAQ
+     expobj.delete('/api/faq/:id', function (req, res, next) {
+        FAQ.deleteOne(req.params._Id).then(function (err, results) {
+          if (err) {
+            res.json(err);
+          } else {
+           res.json(results);
+       };
+   })
+});  
+    //Update api for FAQ
+    expobj.put("/api/faq/:id", (req, res, next) => {
+        FAQ.updateOne({
+            _id: req.params._id
+        }, {
+            $set: {
+                question: req.body.question,
+                answer: req.body.answer
+            }
+        }, {
+            multi: true
+        }, function (err, update) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(update);
+            }
+        });
+    });     
     
+    };
 
-};
