@@ -2,7 +2,7 @@
 angular.module('angappRoutes', []).config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
 
-        .when('/kdl', {
+        .when('/', {
             templateUrl: 'views/home.html',
             controller: 'HomeController'
         })
@@ -14,7 +14,7 @@ angular.module('angappRoutes', []).config(['$routeProvider', '$locationProvider'
             templateUrl: 'views/admin-form.html',
             controller: 'AdminFormController'
         })
-        .when('/', {
+        .when('/admin', {
             templateUrl: 'views/admin.html',
             controller: 'AdminController'
         })
