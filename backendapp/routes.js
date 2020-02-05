@@ -100,7 +100,7 @@ module.exports = function (expobj) {
     //Delete Hero Component
     expobj.delete('/api/hero/:heroId', function (req, res) {
         // console.log(req.params.heroId);
-        Hero.deleteOne({"_id":req.params.heroId}).then(function (err, results) {
+        Hero.deleteOne({ "_id": req.params.heroId }).then(function (err, results) {
             if (err) {
                 res.json(err);
             } else {
@@ -173,7 +173,7 @@ module.exports = function (expobj) {
 
     //Api to Delete Data
     expobj.delete('/api/about/:aboutId', function (req, res) {
-        About.deleteOne({"_id":req.params.aboutId}, {
+        About.deleteOne({ "_id": req.params.aboutId }, {
             multi: true
         }, function (err, results) {
             if (err) {
@@ -181,13 +181,13 @@ module.exports = function (expobj) {
             } else {
                 res.json(results);
             }
-            
-        }); 
+
+        });
     });
 
     // Admin Component
 
-    
+
 
     // Contact Component
 
@@ -202,10 +202,10 @@ module.exports = function (expobj) {
 
     const Gallery = require("./models/gallery");
 
-    
+
 
     // API to upload Data
-    expobj.post("/api/gallery",upload.single('image'), (req, res) => {
+    expobj.post("/api/gallery", upload.single('image'), (req, res) => {
         const gallery = new Gallery({
             image: req.file.path
         })
@@ -220,7 +220,6 @@ module.exports = function (expobj) {
                     msg: 'Uploaded Successfully.'
                 });
             }
-
         });
     });
 
@@ -262,7 +261,7 @@ module.exports = function (expobj) {
 
     //Api to Delete Data
     expobj.delete('/api/gallery/:imageId', function (req, res) {
-        Gallery.deleteOne({"_id":req.params.imageId}, {
+        Gallery.deleteOne({ "_id": req.params.imageId }, {
             multi: true
         }, function (err, results) {
             if (err) {
@@ -270,7 +269,7 @@ module.exports = function (expobj) {
             } else {
                 res.json(results);
             }
-        }); 
+        });
     });
 
     // FAQ component
