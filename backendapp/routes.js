@@ -32,11 +32,7 @@ module.exports = function (expobj) {
 
     // API for Application  
 
-    // Home
-
-
     // Hero Component
-
     const Hero = require("./models/hero");
 
     //Upload Hero Content
@@ -99,7 +95,6 @@ module.exports = function (expobj) {
 
     //Delete Hero Component
     expobj.delete('/api/hero/:heroId', function (req, res) {
-        // console.log(req.params.heroId);
         Hero.deleteOne({ "_id": req.params.heroId }).then(function (err, results) {
             if (err) {
                 res.json(err);
@@ -111,7 +106,6 @@ module.exports = function (expobj) {
 
 
     // About Component
-
     const About = require("./models/about");
 
     // API to upload Data
@@ -185,21 +179,78 @@ module.exports = function (expobj) {
         });
     });
 
-    // Admin Component
-
-
-
     // Contact Component
+    const Contact = require("./models/contact")
 
+    //Upload Contact Content
+    expobj.post("/api/contact", (req, res, next) => {
+        const contact = new Contact({
+            email: req.body.email
+        });
+        Contact.save(function (err, result) {
+            if (err) {
+                res.json({
+                    msg: 'Failed to upload.'
+                });
+            } else {
+                res.json({
+                    msg: 'Uploaded Successfully.'
+                });
+            }
 
-    // Register Component
+        });
+    });
 
+    //Get Contact Content
+    expobj.get("/api/contact", (req, res, next) => {
+        Contact.find(function (err, result) {
+            if (err) {
+                res.json({
+                    msg: 'Error Not Get Data Successfully'
+                });
+            } else {
+                res.json({
+                    msg: 'Get Data Successfully',
+                    result: result
+                });
+            }
+        });
+    });
+
+    //Update Contact Component
+    expobj.put('/api/conatct/:contactId', function (req, res, next) {
+        Contact.updateOne({
+            contactId: req.body.contactId
+        }, {
+            $set: {
+                email: req.body.email
+            }
+        }, {
+            multi: true
+        }, function (err, update) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(update);
+            }
+        });
+    });
+
+    //Delete Hero Component
+    expobj.delete('/api/contact/:conatctId', function (req, res) {
+        Hero.deleteOne({ "_id": req.params.contactId }).then(function (err, results) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(results);
+            }
+        });
+    });
 
     // Sponsors Component
-
     const Sponsors = require("./models/sponsors");
 
-
+    // Add Image
     expobj.post("/api/sponsors", upload.single('image'), (req, res, next) => {
         const sponsors = new Sponsors({
             image: req.file.path
@@ -218,6 +269,7 @@ module.exports = function (expobj) {
         });
     });
 
+    //get image
     expobj.get("/api/sponsors", (req, res, next) => {
         Sponsors.find(function (err, result) {
             if (err) {
@@ -234,9 +286,29 @@ module.exports = function (expobj) {
 
         });
     });
-    expobj.delete('/api/sponsors/:id', function (req, res) {
 
-        Sponsors.remove({ _id: req.params.id }, function (err, result) {
+    expobj.put("/api/sponsor/:sponsorId", upload.single('image'), (req, res, next) => {
+        Gallery.updateOne({
+            sponsorId: req.params.sponsorId
+        }, {
+            $set: {
+                image: req.file.path
+            }
+        }, {
+            multi: true
+        }, function (err, update) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(update);
+            }
+        });
+    });
+
+    // delete image 
+    expobj.delete('/api/sponsors/:sponsorId', function (req, res) {
+
+        Sponsors.deleteOne({ _id: req.params.sponsorId }, function (err, result) {
             if (err)
                 res.send(err);
             else
@@ -244,9 +316,11 @@ module.exports = function (expobj) {
         });
     });
 
-    // Gallery Component
 
+
+    // Gallery Component
     const Gallery = require("./models/gallery");
+
     // API to upload Data
     expobj.post("/api/gallery", upload.single('image'), (req, res) => {
         const gallery = new Gallery({
@@ -283,9 +357,11 @@ module.exports = function (expobj) {
 
         });
     });
+
+    // delete image
     expobj.delete('/api/gallery/:id', function (req, res) {
 
-        Gallery.remove({ _id: req.params.id }, function (err, result) {
+        Gallery.deleteOne({ _id: req.params.id }, function (err, result) {
             if (err)
                 res.send(err);
             else
@@ -294,9 +370,9 @@ module.exports = function (expobj) {
     });
 
     //Api to update data
-    expobj.put("/api/gallery/:imageId", upload.single('image'), (req, res, next) => {
+    expobj.put("/api/gallery/:galleryId", upload.single('image'), (req, res, next) => {
         Gallery.updateOne({
-            imageId: req.fiel.path
+            galleryId: req.params.galleryId
         }, {
             $set: {
                 image: req.file.path
@@ -313,8 +389,8 @@ module.exports = function (expobj) {
     });
 
     //Api to Delete Data
-    expobj.delete('/api/gallery/:imageId', function (req, res) {
-        Gallery.deleteOne({ "_id": req.params.imageId }, {
+    expobj.delete('/api/gallery/:galleryId', function (req, res) {
+        Gallery.deleteOne({ "_id": req.params.galleryId }, {
             multi: true
         }, function (err, results) {
             if (err) {
@@ -328,8 +404,6 @@ module.exports = function (expobj) {
     // FAQ component
 
     const FAQ = require("./models/faq");
-
-
 
     // get api for FAQ
     expobj.get("/api/faq", (req, res, next) => {
@@ -361,7 +435,7 @@ module.exports = function (expobj) {
 
     expobj.delete('/api/faq/:id', function (req, res) {
 
-        FAQ.remove({ _id: req.params.id }, function (err, result) {
+        FAQ.deleteOne({ _id: req.params.id }, function (err, result) {
             if (err)
                 res.send(err);
             else
