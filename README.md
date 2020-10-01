@@ -1,4 +1,4 @@
-# VoidHacks2.0
+# VoidHacks 2.0
 Void Hacks() is a 36 hour hackathon fostering innovation and creativity through learning by doing, with some wicked prizes up for grabs. While taking breaks from building your projects, you’ll enjoy free meals, attend fun mini-events, interact with industry leaders, and make some friends along the way!
 
 This is a dynamic website for VoidHacks.
